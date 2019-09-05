@@ -1,0 +1,2 @@
+Predicted_purity	Predicted_ploidy
+0.78763	2.6048
