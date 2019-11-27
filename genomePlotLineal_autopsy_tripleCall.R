@@ -1,4 +1,4 @@
-#Load libraries:
+# Libraries:
 library(plotrix)
 library(igraph)
 library(quantsmooth)
@@ -18,7 +18,9 @@ arc = function(x0, x1, y, xr, yr, col, lwd) {
 }
 
 # INPUTS:
+# when running from command line:
 args = commandArgs(trailingOnly=TRUE)
+# test if there is at least one argument: if not, return an error
 #if (length(args)!=4) {
 #  stop("Arguments: DATA_DIR(path), donor, normal, tumor", call.=FALSE)
 #}
@@ -34,9 +36,10 @@ saveClusteredMutations = "no"
 ###########################################
 samples=c("I-H-106917-T2-1-D1-2","I-H-106917-T2-2-D1-2","I-H-106917-T2-3-D1-2","I-H-106917-T2-4-D1-2","I-H-130718-T1-1-D1-2","I-H-130718-T1-10-D1-2","I-H-130718-T1-11-D1-1","I-H-130718-T1-12-D1-1","I-H-130718-T1-2-D1-2","I-H-130718-T1-4-D1-2","I-H-130718-T1-6-D1-2","I-H-130718-T1-9-D1-2","I-H-130719-T1-2-D1-2","I-H-130719-T1-4-D1-2","I-H-130719-T1-5-D1-2","I-H-130719-T1-6-D1-2","I-H-130720-T1-2-D1-2","I-H-130720-T1-3-D1-2","I-H-130720-T1-4-D1-2","I-H-130720-T1-5-D1-2","I-H-130720-T1-8-D1-2","I-H-130720-T1-9-D1-1")
 for(sample in samples) {
+#sample="I-H-106917-T2-1-D1-2"
 tSample=sample
 cna=paste0("/Users/yellapav/Desktop/p220_2019/genome_plots/input/",sample,"_subclones.txt")
-sv=paste0("/Users/yellapav/Desktop/p220_2019/genome_plots/input/",sample,"_brass.txt")
+sv=paste0("/Users/yellapav/Desktop/p220_2019/genome_plots/input/",sample,"_sv.txt")
 snv=paste0("/Users/yellapav/Desktop/p220_2019/genome_plots/input/",sample,"_vcf.txt")
 purity=paste0("/Users/yellapav/Desktop/p220_2019/genome_plots/input/",sample,"_rho.txt")
 #caveman needs CHROM and POSITION
@@ -102,7 +105,7 @@ chr_lens <- chr_lens[names(chr_lens) %in% c(1:22, "X", "Y")]
 
 # LINEAR GENOME PLOTS:
 #pdf(paste0(path, donor, "/VC/", nSample, "_vs_", tSample, "/final/combine/svs/", nSample, "_vs_", tSample, "_genome_plot_lineal.pdf"), height=7, width=15)
-pdf(paste0("/Users/yellapav/Desktop/p220_2019/genome_plots/plots/",sample,"_genome_plot.pdf"), height=7, width=15)
+pdf(paste0("/Users/yellapav/Desktop/p220_2019/genome_plots/plots/",sample,"_genome_plot_tripleSV.pdf"), height=7, width=15)
 yrange = c(0, ceiling(max(battenberg$total))+1)
 if(yrange[2] == 3){ yrange[2] <- yrange[2]+1 }
 yrange_size = yrange[2] - yrange[1]
@@ -462,8 +465,8 @@ for(i in c(1:22, "X", "Y")) {
          lty=1, lwd=c(4,4, rep(1,5)), col=c("goldenrod2", "darkslategray", "firebrick2", "dodgerblue1", "palegreen3", "gray20"), cex=0.75)
   
   
-  #Plot Cancer Genes
-  gene_chr= gene[gene$chr == i & gene$Hallmark == "Yes",] 
+  # CANCER GENES:
+  gene_chr= gene[gene$chr == i & gene$Hallmark == "Yes",] # intentar millorarho
   if(nrow(gene_chr) > 0){
     for(z in (1:nrow(gene_chr))) {
       text(gene_chr$start[z], -3.2*ylim[2]/10, gene_chr$Gene.Symbol[z], srt = 60, cex=1, col="brown3", adj=1)
