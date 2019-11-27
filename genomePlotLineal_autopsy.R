@@ -19,13 +19,6 @@ arc = function(x0, x1, y, xr, yr, col, lwd) {
 
 # INPUTS:
 args = commandArgs(trailingOnly=TRUE)
-#if (length(args)!=4) {
-#  stop("Arguments: DATA_DIR(path), donor, normal, tumor", call.=FALSE)
-#}
-#path <- args[1] #input path
-#donor <- args[2] #Sample name
-#nSample <- args[3] #Normal Sample name
-#tSample <- args[4] #Tumor Sample name
 rescue = "yes"
 saveClusteredMutations = "no"
 
@@ -37,9 +30,8 @@ for(sample in samples) {
 tSample=sample
 cna=paste0("/Users/yellapav/Desktop/p220_2019/genome_plots/input/",sample,"_subclones.txt")
 sv=paste0("/Users/yellapav/Desktop/p220_2019/genome_plots/input/",sample,"_brass.txt")
-snv=paste0("/Users/yellapav/Desktop/p220_2019/genome_plots/input/",sample,"_vcf.txt")
+snv=paste0("/Users/yellapav/Desktop/p220_2019/genome_plots/input/",sample,"_vcf.txt") #Requires only chrom position so non-vcf files would work
 purity=paste0("/Users/yellapav/Desktop/p220_2019/genome_plots/input/",sample,"_rho.txt")
-#caveman needs CHROM and POSITION
 
 # INFO PURITY SAMPLE:
 info <- read.table(purity, sep="\t", header=T, stringsAsFactors = F)
@@ -115,7 +107,6 @@ par(mar=c(0,4,4,8)+0.1, xpd=F, cex.axis=0.75, cex.lab=0.75)
 
 xlim = c(0, sum(chr_lens))
 
-# SNV: 
 # SNVS - Rainfall plot:
 cumSumsChr <- cumsum(chr_lens)
 caveman_global <- caveman
@@ -254,7 +245,8 @@ if(nrow(brassGlobal)>0) {
           lwd = 1
         )
       }
-      else{ # Inversion
+      # Inversion
+      else{
         inversionCol <- "palegreen3"
         segments(brassGlobal$POS1[j], 0, brassGlobal$POS1[j], yrange[2] + 0.75*yrange_size, col=inversionCol, lwd=1, lty=ltyBrass)
         segments(brassGlobal$POS2[j], 0, brassGlobal$POS2[j], yrange[2] + 0.75*yrange_size, col=inversionCol, lwd=1, lty=ltyBrass)
@@ -269,7 +261,8 @@ if(nrow(brassGlobal)>0) {
       }
     }
     
-    else { # inter-chromosomal translocation
+    # inter-chromosomal translocation
+    else { 
       segments(brassGlobal$POS1[j], 0, brassGlobal$POS1[j], yrange[2] + 0.75*yrange_size, col="gray20", lwd=1, lty=ltyBrass)
       segments(brassGlobal$POS2[j], 0, brassGlobal$POS2[j], yrange[2] + 0.75*yrange_size, col="gray20", lwd=1, lty=ltyBrass)
       arc(
