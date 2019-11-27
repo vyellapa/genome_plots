@@ -383,7 +383,9 @@ for(i in c(1:22, "X", "Y")) {
             lwd = 1
           )
         }
-        else{ # Inversion
+        
+        # Inversion
+        else{
           inversionCol <- "palegreen3"
           segments(brass_sample_chr$POS1[j], 0, brass_sample_chr$POS1[j], yrange[2] + 0.75*yrange_size, col=inversionCol, lwd=1, lty=ltyBrass)
           segments(brass_sample_chr$POS2[j], 0, brass_sample_chr$POS2[j], yrange[2] + 0.75*yrange_size, col=inversionCol, lwd=1, lty=ltyBrass)
@@ -398,7 +400,8 @@ for(i in c(1:22, "X", "Y")) {
         }
       }
       
-      else { # inter-chromosomal translocation
+      # inter-chromosomal translocation
+      else { 
         #low end in chr
         if(brass_sample_chr$CHR1[j] == i) {
           segments(brass_sample_chr$POS1[j], 0, brass_sample_chr$POS1[j], yrange[2] + yrange_size, col="gray20", lwd=1, lty=ltyBrass)
