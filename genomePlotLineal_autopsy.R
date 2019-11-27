@@ -321,7 +321,6 @@ for(i in c(1:22, "X", "Y")) {
   }
   
   axis(1, pos = -.85, at = pretty(xlim)[pretty(xlim) <= xlim[2]], labels = pretty(xlim)[pretty(xlim) <= xlim[2]] / 1e6)
-  #mtext(paste0("chr", i, " (Mb)"), 1, 1, at = median(yrange), adj = 1, cex=0.5)
   
   axis(2, line=0, at = seq(0, yrange[2]-1, 1),  col.axis = "black",
        labels=seq(0, yrange[2]-1, 1), lwd.ticks =1, cex.axis = 0.75, las=2)
@@ -354,14 +353,6 @@ for(i in c(1:22, "X", "Y")) {
     lty = 3
   )
   segments(x0 = c(1, 1), x1 = c(xlim[2], xlim[2]),y0=yrange[2] + 0.5, lty=1)    
-    
-    
-  # Colors used in the other script:
-  #td_col         = "darkorange4" => head to tail > tandem duplication
-  #del_col        = "darkslateblue"  => tail to head > deletion
-  #inter_chrs_col = "darkorchid1"
-  #tail_tail_col  = "cadetblue4" => inversion
-  #head_head_col  = "chartreuse2" => inversion
     
   # BRASS output:
   brass_sample_chr <- brass[brass$CHR1 == i | brass$CHR2 ==i, ]  
